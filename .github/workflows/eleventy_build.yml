@@ -1,6 +1,16 @@
-name: Deploy
-uses: peaceiris/actions-gh-pages@v2.5.0
-env:
-  ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-  PUBLISH_BRANCH: gh-pages
-  PUBLISH_DIR: ./public
+name: Test Build
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Build
+        uses: ddody/11ty-sample@master
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2.5.0
+        env:
+          PUBLISH_DIR: _site
+          PUBLISH_BRANCH: gh-pages
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
